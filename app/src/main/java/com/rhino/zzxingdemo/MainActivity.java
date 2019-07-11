@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             String result = data.getStringExtra(CaptureActivity.KEY_RESULT);
             etQrCode.setText(result);
             Log.d(TAG, "result = " + result);
-            Toast.makeText(this, "扫描成功：" + result, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "扫描成功：" + result, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -68,11 +68,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickShare(View v) {
         String content = etQrCode.getText().toString();
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        if (TextUtils.isEmpty(content)) {
+            content = "www.baidu.com";
+            etQrCode.setText(content);
+        }
+//        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+//        Bitmap qrcodeBitmap = CodeUtils.createQRCode(
+//                content,
+//                dip2px(this, 300),
+//                icon);
         Bitmap qrcodeBitmap = CodeUtils.createQRCode(
-                TextUtils.isEmpty(content) ? "www.baidu.com" : content,
-                dip2px(this, 300),
-                icon);
+                content,
+                dip2px(this, 300));
         ivQrCode.setImageBitmap(qrcodeBitmap);
     }
 
